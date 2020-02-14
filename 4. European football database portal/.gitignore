@@ -1,0 +1,5 @@
+node_modules
+*.zip
+*.txt
+*.swp
+package-lock.json

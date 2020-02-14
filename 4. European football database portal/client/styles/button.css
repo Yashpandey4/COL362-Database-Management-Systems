@@ -1,0 +1,29 @@
+.slidebutton:hover,
+.slidebutton:focus {
+  box-shadow: inset 10.5em 0 0 0  #ddb388;
+}
+.slidebutton {
+ 	color: #ddb388;
+
+}
+button {
+  color: #ddb388;
+  transition: 0.5s !important;
+	-webkit-transition-timing:.5s !important;
+}
+button:hover{
+  border-color: #ddb388 !important;
+  color: black !important;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: 2px solid;
+  font: inherit;
+  line-height: 1;
+  margin: 0.5em;
+  padding: 1em 2em;
+  position:absolute;
+  right:0px;
+}

@@ -1,0 +1,29 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/1.33.1/plotly-basic.js"></script>
+
+<link rel="stylesheet" href="styles/menu.css">
+<ul class="menu cf">
+    <li><a href="/">Home</a></li>
+    <li><a href="team">Teams</a></li>
+    <li><a href="Country">Countries</a></li>
+	<li><a href="database">Database</a></li>
+	<li><a href="report">Report</a></li>
+    <li><a href="match">Match</a></li>
+    <li><a href="player">Player</a></li>
+    <li><a href="league">league</a></li>
+    <% if (!user) { %>
+        <li><a href="login">Login</a></li>
+    <% } %>
+    <% if (user) { %>
+        <li><a href="manager"><%= user.first_name %></a></li>
+        <hidden><%= user.country_id %></hidden>  
+        <li><a href="logout">logout</a></li>
+    <% } %>
+    
+</ul>
+
+
+<% if (user) { %>
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<% } %>

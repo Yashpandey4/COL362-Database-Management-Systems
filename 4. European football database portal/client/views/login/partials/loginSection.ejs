@@ -1,0 +1,238 @@
+<div class="container">
+   <section id="formHolder">
+      <div class="row">
+         <!-- Brand Box -->
+         <div class="col-sm-6 brand">
+            <a href="/" class="logo"><img src="../../assets/images/FIFA.jpg" style="height: 100px;"> <span></span></a>
+            <div class="heading">
+               <h2>European</h2>
+               <h2>Football statistics</h2>
+				<p></p>
+               <p>FIFA</p>
+            </div>
+            <div class="success-msg">
+               <p>Great! You are one of our members now</p>
+               <a href="#" class="profile">Your Profile</a>
+            </div>
+         </div>
+         <!-- Form Box -->
+         <div class="col-sm-6 form">
+            <!-- Login Form -->
+            <div class="login form-peice switched">
+               <form class="login-form" id="loginform" onSubmit="mylogin();return false;" >
+                  <div class="form-group">
+                     <label for="email">Email Adderss</label>
+                     <input type="email" name="email" id="loginemail" required>
+                  </div>
+
+                  <div class="form-group">
+                     <label for="loginPassword">Password</label>
+                     <input type="password" name="password" id="loginPassword" required>
+                  </div>
+
+                  <div class="CTA">
+					  <button type="submit"  class="slide" value="">Log In</button>
+                     <a href="#" class="switch">I'm New</a>
+                  </div>
+				   <div class="CTA">
+				   <a href="/api/forgot" class="switch"> Forgot Password</a> </div>
+               </form>
+            </div>
+            <div class="signup form-peice">
+
+<!-- onsubmit="myfunk(); return false;" -->
+               <form id="subform" class="login-form" onsubmit="myfunk(); return false;" >
+
+
+
+
+                  <div class="form-group">
+                     <label for="name">First Name</label>
+                     <input type="text" name="name" id="name" class="name">
+                     <span class="error"></span>
+                  </div>
+                  <div class="form-group">
+                     <label for="name">Last Name</label>
+                     <input type="text" name="Lname" id="Lname" class="Lname">
+                     <span class="error"></span>
+                  </div>
+
+                  <div class="form-group">
+                     <label for="email">Email</label>
+                     <input type="text" name="email" id="Lname">
+                     <span class="error"></span>
+                  </div>
+<!--                  <div class="form-group">
+                     <h5 style="font-size:12px;font-family='Montserrat','Raleway',sans-serif!important;margin-bottom:0px;margin-top:20px;">DATE OF BIRTH</h5>
+                     <input type="date"  max="10/08/2018" name="dob" id="dob" class="dob" required>
+                     <span class="error"></span>
+                  </div> 
+
+                  <div class="form-group">
+                     <h5 style="font-size:12px;font-family='Montserrat',Raleway',sans-serif!important;margin-bottom:20px;">COLLEGE NAME</h5>
+                     <ul style="list-style:none;padding-left:0px;padding-top:10px;">
+                     <li><input style="width:10px;position:absolute;" type="radio" onClick="handle(this);" name="college" id="others" value="IITD" checked /><span style="margin-left:20px;">IIT Delhi</span></li>
+                     <div> 
+                     <li><input class="specialselect" style="width:10px;position:absolute;" type="radio" onClick="handle(this);" name="college" id="others" value="other"><span style="margin-left:20px;">Others</span></li>
+                     <div class="reveal-if-active" id="col" style="display:none">
+                      <label for="clgName">Others...</label>
+                       <input type="text" id="clgName" name="clgName" class="require-if-active" data-require-pair="#others">
+                     </div>
+                     </div>
+                     </ul>
+                     <span class="error"></span>
+                  </div> 
+				     <div class="form-group">
+                     <label for="phone">Phone Number </label>
+                     <input type="telephone" name="contact_number" id="phone" class="phone" required>
+						 <span class="error"></span>
+                  </div>
+				   <div class="form-group">
+				   <select class="dropdownn" id="mounth" name="gender" required>
+					   <option value="hide">Gender</option>
+					   <option value="Male"  name >Male</option>
+					   <option value="Female" >Female</option>
+					   <option value="Others" >Others</option>
+					   </select>
+				   </div> -->
+                  <div class="form-group">
+                     <label for="password">Password</label>
+                     <input type="password" name="password" id="password" class="pass">
+                     <span class="error"></span>
+                  </div>
+
+                  <div class="form-group">
+                     <label for="passwordCon">Confirm Password</label>
+                     <input type="password" name="passwordCon" id="passwordCon" class="passConfirm">
+                      <span class="error"></span>
+                   </div>
+
+           <!--       <div class="form-group">
+                     <label for="clg">Referral Code<b>(optional)</b></label>
+                     <input type="text" name="referral_code" id="reff" class="ref">
+
+                  </div> 
+            <div id="otp" style="display:none;">
+              <label>OTP</label>
+              <input type="otp" name="otp">
+            </div>-->
+					  <div class="buttons signup-form">
+						  <button  type="submit" value=""   class="slide">Signup Now</button>
+				     </div>
+
+						  <a href="#" class="switch">I have an account</a>
+
+
+               </form>
+            </div><!-- End Signup Form -->
+         </div>
+      </div>
+<script type="text/javascript">
+function handle(e){
+console.log(e)
+if(e.value=="other"){
+var el = document.getElementById("col");
+el.style.display = "block";
+  }else{
+  var el = document.getElementById("col");
+el.style.display = "none";
+  }
+
+  //alert(e)
+}
+ function mylogin(){
+      var formdata = {};
+      $.each($('#loginform').serializeArray(), function(_, kv) {
+        formdata[kv.name] = kv.value;
+      });
+      $.post("/login",formdata)
+      .done((data,status)=>{
+            localStorage.setItem('USER',JSON.stringify(data.user));
+            localStorage.setItem('RDV', data.token);
+            console.log(status);
+            if(data.error)
+              alert(data.message);
+            else{
+              console.log("revert");
+              console.log(data);
+              window.location.href = "/manager";
+            }
+      }).fail((jqXHR, textStatus, errorThrown)=>{
+        alert(jqXHR.responseJSON.message);
+      })
+ }
+  function myfunk(){
+       var formdata = $('form#subform').serializeArray();
+       var paramObj = {};
+      $.each($('#subform').serializeArray(), function(_, kv) {
+        paramObj[kv.name] = kv.value;
+      });
+      var ret = false;
+
+
+        $.post("/signup",paramObj)
+        .done(function(data,status){
+            console.log(data);
+            localStorage.setItem('USER',JSON.stringify(data.user));
+            localStorage.setItem('RDV', data.token);
+            console.log(status);
+           if(data.error)
+            alert(data.message);
+           else
+            window.location.href = "/manager";
+        }).fail(
+        function(jqXHR, textStatus, errorThrown) {
+          //$("#error").html(jqXHR.responseText);
+            console.log(textStatus);
+            console.log(errorThrown);
+            console.log(jqXHR.responseJSON);
+            if(jqXHR.responseJSON.error){
+              if(jqXHR.responseJSON.message=="Email Verification Required"){
+                alert("An email containing OTP has been sent.Please fill the OTP in form")
+              }else
+              alert(jqXHR.responseJSON.message);
+            }
+            if(jqXHR.responseJSON.message=="Email Verification Required"){
+              ret = false;
+            }
+        });
+/*
+       var otp = document.getElementById("otp");
+       if(!(otp.style.display == "none"))
+         ret = true;
+       otp.style.display = "block";
+       console.log(ret);
+*/
+       return false;
+  }
+</script>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="z-index: 11000; vertical-align: middle;">
+  <div class="modal-dialog modal-dialog-centered" role="document" style="position:absolute;top:50%;transform:translateY(-50%) translateX(-50%);left:50%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <main class="mainn" >
+   <br>
+   <p style="align-self: center;">OTP
+
+   <input type="text"  id="otp" name="otp" placeholder="OTP" required>
+</p>
+<br>
+
+</main>
+      </div>
+      <div class="modal-footer">
+        <div class="signup">
+         <form class="signup-form">
+        <button type="submit" class="btn btn-primary ptn" data-dismiss="modal">Register</button>
+      </form>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
