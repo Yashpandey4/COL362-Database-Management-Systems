@@ -1,0 +1,59 @@
+3 main classes: PageHandler, FileHandler, FileManager.
+
+Each file is stored in memory as pages of size PAGE_CONTENT_SIZE. At any given time, you can have at max BUFFER_SIZE number of pages in memory. 
+
+
+Class PageHandler:
+Class to handle a page in memory
+Has functions to get the page number and data.
+This class has 3 constructors:
+PageHandler(): 								Inititalize page number and content as null.
+PageHandler(int,char *): 					Initialize a new page and assign given page number and data pointer.
+PageHandler(const PageHandler &pageHandle): Take a PageHandler and make its copy.
+
+2 PageHandler objects are equal only if both their page numbers and data pointers are equal.
+GetData(): 				Use this function to get the pointer to contents of the page. This returns a char*, which points to the memory buffer.
+GetPageNum(): 			Use this function to get the page number in the file.
+
+
+
+Class FileHandler:
+This class handles a file in memory.
+This class supports 2 constructor:
+FileHandler(): 								This is the default constructor that initializes the attributes. The file is closed at first.
+FileHandler(const FileHandler &fileHandle): This creates a copy of the given FileHandler.
+
+Each page in memory has 2 main attributes:
+DirtyBit:									This is used to notify the buffer manager that this file has been modified and should be written back to disk before removing it from memory.
+Pinning:									When a page has to be removed from the memory, only an unpinned page will be considered for removing. So the user has to unpin pages once he is done with them to allow more pages to be loaded into the memory.
+
+2 FileHandler objects are same if they correspond to the same file.
+This class has the following functions:
+FirstPage():								This function returns the PageHandler for the first page of the file.
+LastPage():									This function returns the PageHandler for the last page.
+PageAt(int page_number):					This function returns the PageHandler of a page given its index. As we can have a limited number of pages in memory, some page may need to be evicted from the memory. We use LRU as the page replacement policy.
+NextPage(int page_number):					Given a page number, this function returns the PageHandler for the next page, if one exists.
+PrevPage(int page_number):					Given a page number, this function returns the PageHandler for the previous page, if one exists.
+NewPage():									This function creates a new page the end of file and returns its PageHandler.
+DisposePage(int page_number):				This function marks a page as dirty and unpins it. It returns a boolean, indicating if the process was successful. You may receive a False in case of an invalid page number or if page is already free.
+MarkDirty(int page_number):					This function is used to mark a page as dirty.
+UnpinPage(int page_number):					This function is used to unpin the page.
+FlushPages():								This function is used to flush all pages in memory. All dirty pages would be written to the file.
+FlushPage(int page_number):					This function is used to flush a page, given its page number.
+In each of the functions, if an invalid page index is given, the function throws InvalidPageException.
+
+
+
+Class FileManager:
+The user creates a single FileManager object that would manage all the files the user wants to use. If the user tries to create multiple instances of this class, he gets FileManagerInstanceException.
+
+constructor FileManager(): 					The oject is initialized and assigned a new buffer manager.
+deconstructor ~FileManager():				This can be used to delete the object and free its buffer manager.
+CreateFile(const char *fileName):			Given a file name, this function creates the file and returns its FileHandler object. It may throw InvalidFileException if the file couldn't be created by the OS.
+DestroyFile(const char *fileName):			This function is used to delete the file, given its file name.
+OpenFile(const char *fileName):				This function requests the OS to open the given file. This function throws a InvalidFileException if the OS couldn't open the file.
+CloseFile(FileHandler &fileHandle):			This function is used to close the file, given its FileHandler and return a boolean indicating success for the operation.
+ClearBuffer():								this function is used to clear the complete buffer with pages from all files.
+PrintBuffer():								This function would display the current contents of the buffers, which can be used for understanding the working of system and debugging.
+
+Note: The above mentioned exceptions have been included in errors.h and the constant values are stored in constats.h
